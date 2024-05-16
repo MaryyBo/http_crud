@@ -16,20 +16,33 @@ const currentFileName = path.basename(__filename) // поверне нам index
 
 const db = {};
 
-const filesNames = fs.readdirSync(__dirname);
-// console.log(filesNames);
+// короткий варіант - чейнінг 
 
-const filteredArray = filesNames.filter(
-     (currenFile) => /.js$/.test(currenFile) && currenFile !== currentFileName
-    );
-// console.log(filteredArray);
-
-filteredArray.forEach(currenFile => {
+fs.readdirSync(__dirname).filter(
+    (currenFile) => /.js$/.test(currenFile) && currenFile !== currentFileName
+).forEach(currenFile => {
     const absolutePathToFile = path.resolve(__dirname, currenFile);
-    // console.log(absolutePathToFile);
+
     const Model = require(absolutePathToFile);
     Model._client = client;
-    db[Model._tableName] = Model;
+    db[Model.name] = Model;
 })
 
+// Повний варінт
+
+// const filesNames = fs.readdirSync(__dirname);
+// // console.log(filesNames);
+
+// const filteredArray = filesNames.filter(
+//      (currenFile) => /.js$/.test(currenFile) && currenFile !== currentFileName
+//     );
+// // console.log(filteredArray);
+
+// filteredArray.forEach(currenFile => {
+//     const absolutePathToFile = path.resolve(__dirname, currenFile);
+//     // console.log(absolutePathToFile);
+//     const Model = require(absolutePathToFile);
+//     Model._client = client;
+//     db[Model._tableName] = Model;
+// })
 
