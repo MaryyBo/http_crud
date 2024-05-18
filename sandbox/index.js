@@ -1,32 +1,32 @@
-//fs - file system
-// path - прокладую шляхи до файлів
+// //fs - file system
+// // path - прокладую шляхи до файлів
 
-const fs = require('fs');
-const path = require('path');
+// const fs = require('fs');
+// const path = require('path');
 
-// __dirname - константа Node, зберігає абсолютну адресу поточної папки 
-// __filename - константа Node, зберігає абсолютну адресу поточного файлу 
+// // __dirname - константа Node, зберігає абсолютну адресу поточної папки 
+// // __filename - константа Node, зберігає абсолютну адресу поточного файлу 
 
-// console.log(__dirname);
-// console.log(__filename);
+// // console.log(__dirname);
+// // console.log(__filename);
 
-const currentFileName = path.basename(__filename) // поверне нам index.js - назву поточного файлу
-// адреса, що підставиться - /home/marusya/dev/projects/http_crud/sandbox/index.js
-// console.log(currentFileName);
+// const currentFileName = path.basename(__filename) // поверне нам index.js - назву поточного файлу
+// // адреса, що підставиться - /home/marusya/dev/projects/http_crud/sandbox/index.js
+// // console.log(currentFileName);
 
-const db = {};
+// const db = {};
 
-// короткий варіант - чейнінг 
+// // короткий варіант - чейнінг 
 
-fs.readdirSync(__dirname).filter(
-    (currenFile) => /.js$/.test(currenFile) && currenFile !== currentFileName
-).forEach(currenFile => {
-    const absolutePathToFile = path.resolve(__dirname, currenFile);
+// fs.readdirSync(__dirname).filter(
+//     (currenFile) => /.js$/.test(currenFile) && currenFile !== currentFileName
+// ).forEach(currenFile => {
+//     const absolutePathToFile = path.resolve(__dirname, currenFile);
 
-    const Model = require(absolutePathToFile);
-    Model._client = client;
-    db[Model.name] = Model;
-})
+//     const Model = require(absolutePathToFile);
+//     Model._client = client;
+//     db[Model.name] = Model;
+// })
 
 // Повний варінт
 
@@ -46,3 +46,27 @@ fs.readdirSync(__dirname).filter(
 //     db[Model._tableName] = Model;
 // })
 
+
+
+const fs = require('fs');
+const path = require('path');
+
+// __dirname - константа ноди, яка зберігає абсолютну адресу поточної папки
+// __filename - контанта ноди, яка зберігає абсолютну адресу поточного файлу
+
+const currentFileName = path.basename(__filename); // index.js
+
+const db = {};
+
+fs.readdirSync(__dirname)
+    .filter(
+        (currentFile) =>
+            /.js$/.test(currentFile) && currentFile !== currentFileName
+    )
+    .forEach((currentFile) => {
+        const absPathToFile = path.resolve(__dirname, currentFile);
+
+        const Model = require(absPathToFile);
+        Model._client = client;
+        db[Model.name] = Model;
+    });

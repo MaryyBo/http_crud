@@ -5,4 +5,4 @@ CREATE TABLE things(
     body text NOT NULL CHECK (body !='')
 );
 
--- INSER INTO things (body) VALUES ('Hello backend');
+INSERT INTO things (body) VALUES ('Hello backend');
