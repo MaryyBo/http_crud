@@ -1,12 +1,14 @@
 // static - вказує на те ,що я буду взаємодіяти з усією таблицею
 
+const DataBaseError = require('../errors/DataBAseError');
+
 class Thing {
     static _tableName = 'things';
     static _client;
     static name = 'Thing';
 
     static _attributes = {
-        body: 'string',
+        body: 'string'
     };
 
     static async create(insertValues) {
@@ -45,12 +47,13 @@ class Thing {
     }
 
     static async findByPk(pk) {
-        const { rows } = await this._client.query(`
-            SELECT * FROM ${this._tableName}
-            WHERE id = ${pk}; 
-            `);
+        // const { rows } = await this._client.query(`
+        //     SELECT * FROM ${this._tableName}
+        //     WHERE id = ${pk}; 
+        //     `);
 
-        return rows;
+        // return rows;
+        throw new DataBaseError ();
     }
 
     static async findAll() {

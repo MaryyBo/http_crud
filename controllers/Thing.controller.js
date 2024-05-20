@@ -1,5 +1,5 @@
 const { Thing } = require('./../models/index');
-// console.log(111, Thing);
+
 
 module.exports.createThing = async (req, res, next) => {
     const { body } = req;
@@ -9,13 +9,14 @@ module.exports.createThing = async (req, res, next) => {
         if (createdThing) {
             return res.status(201).send(createdThing);
         } else {
-            return res.status(400).send();
+            throw new ReferenceError('Reference Error! (CreateThing-Controller)')
         }
 
     } catch (error) {
         next(error);
     }
 };
+
 
 module.exports.getAllThings = async (req, res, next) => {
     try {
