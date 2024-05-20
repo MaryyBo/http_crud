@@ -1,4 +1,5 @@
 const { Thing } = require('./../models/index');
+const NotFoundError = require('../errors/NotFoundError')
 
 
 module.exports.createThing = async (req, res, next) => {
@@ -23,6 +24,7 @@ module.exports.getAllThings = async (req, res, next) => {
         const things = await Thing.findAll();
 
         return res.status(200).send(things);
+
     } catch (error) {
         next(error);
     }
@@ -33,7 +35,11 @@ module.exports.getOne = async (req, res, next) => {
     try {
         const thing = await Thing.findByPk(id);
 
-        return res.status(200).send(thing);
+        if (thing.length > 0) {
+            return res.status(200).send(thing);
+        } else {
+            throw new NotFoundError();
+        }
 
     } catch (error) {
         next(error);
@@ -43,7 +49,7 @@ module.exports.getOne = async (req, res, next) => {
 module.exports.updateOne = async (req, res, next) => {
     console.log(req.body);
 
-    const { params: {id}, body } = req
+    const { params: { id }, body } = req
 
     try {
         const updated = await Thing.updateByPk({

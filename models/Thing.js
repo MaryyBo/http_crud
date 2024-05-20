@@ -47,13 +47,12 @@ class Thing {
     }
 
     static async findByPk(pk) {
-        // const { rows } = await this._client.query(`
-        //     SELECT * FROM ${this._tableName}
-        //     WHERE id = ${pk}; 
-        //     `);
+        const { rows } = await this._client.query(`
+            SELECT * FROM ${this._tableName}
+            WHERE id = ${pk}; 
+            `);
 
-        // return rows;
-        throw new DataBaseError ();
+        return rows;
     }
 
     static async findAll() {
